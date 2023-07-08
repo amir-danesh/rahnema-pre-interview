@@ -9,15 +9,15 @@ class Player:
 class Game:
     def __init__(self, players):
         self.players = players
+        self.answers = {'naam': [], 'shahr': [], 'ghaza': [], 'rang': []}
 
     def start_round(self, letter):
-        answers = {'naam': [], 'shahr': [], 'ghaza': [], 'rang': []}
         for player in self.players:
             print(f"\nNobate {player.name} ast:")
-            for category in answers.keys():
+            for category in self.answers.keys():
                 ans = input(f"yek '{category}' vared konid ke ba {letter} shoru mishavad: ")
-                answers[category].append((player, ans))
-        self.calculate_scores(answers, letter)
+                self.answers[category].append((player, ans))
+        self.calculate_scores(self.answers, letter)
 
 
     def calculate_scores(self, answers, letter):
@@ -37,6 +37,18 @@ class Game:
                 else:
                     player.add_score(10)
 
+    def update_categories(self):
+        while True:
+            category = input("\nbaraye shorue bazi 'done' ra Vared konid, dar gheire in surat, categoryi ke mikhahid ezafe ya hazf konid ra benevisid(be surate khodkar anjam mishavad): ")
+            if category == 'done':
+                break
+            elif category in self.answers:
+                del self.answers[category]
+                print(f"Category '{category}' hazf shod.")
+            else:
+                self.answers[category] = []
+                print(f"Category '{category}' ezafe shod.")
+
 
 
     def display_scores(self):
@@ -53,6 +65,7 @@ def main():
         players.append(Player(name))
 
     game = Game(players)
+    game.update_categories()
     while True:
 
         letter = input("\nbaraye kharej shodan az bazi benevisid 'exit', dar gheire in surat charachteri ke mikhahid ba an bazi konid ra vared konid: ")
