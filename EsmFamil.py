@@ -16,7 +16,7 @@ class Game:
             print(f"\nNobate {player.name} ast:")
             for category in self.answers.keys():
                 ans = input(f"yek '{category}' vared konid ke ba {letter} shoru mishavad: ")
-                self.answers[category].append((player, ans))
+                self.answers[category].append((player, ans.lower()))
         self.calculate_scores(self.answers, letter)
 
 
@@ -69,6 +69,7 @@ def main():
     while True:
 
         letter = input("\nbaraye kharej shodan az bazi benevisid 'exit', dar gheire in surat charachteri ke mikhahid ba an bazi konid ra vared konid: ")
+        letter = letter.lower()
         if letter == 'exit':
             break
         game.start_round(letter)
